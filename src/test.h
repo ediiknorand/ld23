@@ -4,6 +4,7 @@
 typedef struct
 {
   int x, y, sx, sy;
+  int hitbox_w, hitbox_h;
 } Player;
 
 Player player;
