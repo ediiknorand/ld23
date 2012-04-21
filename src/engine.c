@@ -34,6 +34,7 @@ void engine_init_input()
   engine_input.down = 0;
   engine_input.left = 0;
   engine_input.right = 0;
+  engine_input.quit = 0;
 }
 
 
@@ -47,6 +48,7 @@ void set_key(SDLKey k, unsigned char status)
   case SDLK_DOWN: engine_input.down = status; break;
   case SDLK_LEFT: engine_input.left = status; break;
   case SDLK_RIGHT: engine_input.right = status; break;
+  case SDLK_q: engine_input.quit = status; break;
   }
 }
 
@@ -58,8 +60,8 @@ void engine_input_process()
   {
     switch(event.type)
     {
-    case SDL_KEYDOWN: set_key(event.key.keysym.sym, 1);
-    case SDL_KEYUP: set_key(event.key.keysym.sym, 0);
+    case SDL_KEYDOWN: set_key(event.key.keysym.sym, 1); break;
+    case SDL_KEYUP: set_key(event.key.keysym.sym, 0); break;
     }
   }
 }
@@ -68,6 +70,8 @@ void engine_input_process()
 int logic_refresh(Uint32 delta)
 {
   engine_input_process();
+  if(engine_input.quit)
+    return 0;
   /* do something */
   return 1;
 }
