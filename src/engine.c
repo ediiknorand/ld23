@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "engine.h"
+#include "scene.h"
 
 /* Initialization functions */
 void engine_init_sdl()
@@ -21,7 +22,8 @@ void engine_init_screen(int width, int height, int bpp, Uint32 flags)
   engine_screen.bpp = bpp;
   engine_screen.flags = flags;
 
-  if(SDL_SetVideoMode(width, height, bpp, flags) < 0)
+  engine_screen.screen = SDL_SetVideoMode(width, height, bpp, flags);
+  if(!(engine_screen.screen))
   {
     fprintf(stderr, "Error: %s\n", SDL_GetError());
     exit(1);
@@ -62,6 +64,7 @@ void engine_input_process()
     {
     case SDL_KEYDOWN: set_key(event.key.keysym.sym, 1); break;
     case SDL_KEYUP: set_key(event.key.keysym.sym, 0); break;
+    case SDL_QUIT: engine_input.quit = 1; break;
     }
   }
 }
@@ -72,13 +75,21 @@ int logic_refresh(Uint32 delta)
   engine_input_process();
   if(engine_input.quit)
     return 0;
-  /* do something */
+  switch(engine_scene)
+  {
+  case SCENE_INIT: return scene_logic_init(delta); break;
+  case SCENE_GAME: return scene_logic_game(delta); break;
+  }
   return 1;
 }
 
-void render_refresh()
+void render_refresh(Uint32 delta)
 {
-  /* do something */
+  switch(engine_scene)
+  {
+  case SCENE_INIT: scene_render_init(delta); break;
+  case SCENE_GAME: scene_render_game(delta); break;
+  }
 }
 
 void engine_run()
@@ -92,8 +103,32 @@ void engine_run()
   {
     now = SDL_GetTicks();
     running = logic_refresh(now - before);
-    render_refresh();
+    render_refresh(now - before);
     SDL_Delay(30); /* <- why not Vsynced? */
     before = now;
+  }
+}
+
+/* Blit Images */
+void engine_draw_sprite(SDL_Surface *sprite_sheet, Sint16 src_x, Sint16 src_y, Uint16 src_w, Uint16 src_h, Sint16 dest_x, Sint16 dest_y)
+{
+  SDL_Rect src, dest;
+  src.x = src_x;
+  src.y = src_y;
+  src.w = src_w;
+  src.h = src_h;
+  dest.x = dest_x;
+  dest.y = dest_y;
+
+  SDL_BlitSurface( sprite_sheet, &src, engine_screen.screen, &dest);
+}
+
+/* Load - useless function, actually */
+void engine_load_scene(int scene)
+{
+  switch(scene)
+  {
+  case SCENE_INIT: scene_load_init(); break;
+  case SCENE_GAME: scene_load_game(); break;
   }
 }
