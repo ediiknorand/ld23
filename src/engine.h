@@ -13,6 +13,8 @@ typedef struct
 typedef struct
 {
   unsigned char up, down, left, right, quit;
+  unsigned char fire;
+  unsigned char debug; /* debug */
 } Input;
 
 /* Global Vars */

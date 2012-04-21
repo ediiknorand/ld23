@@ -51,6 +51,8 @@ void set_key(SDLKey k, unsigned char status)
   case SDLK_LEFT: engine_input.left = status; break;
   case SDLK_RIGHT: engine_input.right = status; break;
   case SDLK_q: engine_input.quit = status; break;
+  case SDLK_z: engine_input.fire = status; break;
+  case SDLK_1: engine_input.debug = status; break;
   }
 }
 
@@ -105,6 +107,7 @@ void engine_run()
   {
     now = SDL_GetTicks();
     running = logic_refresh(now - before);
+    if(!running) break;
     render_refresh(now - before);
     SDL_Delay(30); /* <- why not Vsynced? */
     before = now;
@@ -133,6 +136,7 @@ void engine_load_scene(int scene)
   case SCENE_INIT: scene_load_init(); break;
   case SCENE_GAME: scene_load_game(); break;
   }
+  engine_scene = scene;
 }
 
 /* Sprite */
