@@ -19,6 +19,7 @@ typedef struct
 Screen engine_screen;
 Input engine_input;
 int engine_scene;
+SDL_Surface *engine_sprites;
 
 /* Init Functions */
 void engine_init_sdl();
@@ -39,5 +40,7 @@ void engine_draw_sprite(SDL_Surface *sprite_sheet,
 
 /* Load scene */
 void engine_load_scene(int scene);
+
+void engine_load_sprite(char *filename);
 
 #endif

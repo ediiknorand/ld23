@@ -90,6 +90,8 @@ void render_refresh(Uint32 delta)
   case SCENE_INIT: scene_render_init(delta); break;
   case SCENE_GAME: scene_render_game(delta); break;
   }
+  SDL_Flip(engine_screen.screen);
+  SDL_FillRect(engine_screen.screen, NULL, 0);
 }
 
 void engine_run()
@@ -131,4 +133,13 @@ void engine_load_scene(int scene)
   case SCENE_INIT: scene_load_init(); break;
   case SCENE_GAME: scene_load_game(); break;
   }
+}
+
+/* Sprite */
+void engine_load_sprite(char *filename)
+{
+  SDL_Surface *aux = SDL_LoadBMP(filename);
+  SDL_SetColorKey(aux, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(aux->format, 255, 0, 255));
+  engine_sprites = SDL_DisplayFormat(aux);
+  SDL_FreeSurface(aux);
 }
