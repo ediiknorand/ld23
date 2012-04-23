@@ -1,0 +1,18 @@
+Don't Leave Our Home! - Ludum Dare 23 - by EdiiKnorand
+
+to compile:
+$  make
+
+to clear:
+$ make clean
+
+Z fires. 
+X leaves/grabs the world.
+Arrows moves.
+
+This has some bugs. And the hitboxes are stranges.
+
+Made in a Linux and using SDL.
+You can find it here: https://github.com/epc09/ld23
+
+Thank you!

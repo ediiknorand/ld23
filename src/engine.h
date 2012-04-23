@@ -13,7 +13,7 @@ typedef struct
 typedef struct
 {
   unsigned char up, down, left, right, quit;
-  unsigned char fire;
+  unsigned char fire, world;
   unsigned char debug; /* debug */
 } Input;
 

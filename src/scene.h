@@ -5,6 +5,9 @@
 
 #define SCENE_INIT 0
 #define SCENE_GAME 5
+#define SCENE_GAMEOVER 8
+
+Uint32 scene_wait;
 
 /* Game scenes */
 
@@ -17,5 +20,10 @@ void scene_render_init(Uint32 delta);
 void scene_load_game();
 int scene_logic_game(Uint32 delta);
 void scene_render_game(Uint32 delta);
+
+/* Game Over */
+void scene_load_gameover();
+int scene_logic_gameover(Uint32 delta);
+void scene_render_gameover(Uint32 delta);
 
 #endif

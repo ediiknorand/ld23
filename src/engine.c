@@ -50,8 +50,10 @@ void set_key(SDLKey k, unsigned char status)
   case SDLK_DOWN: engine_input.down = status; break;
   case SDLK_LEFT: engine_input.left = status; break;
   case SDLK_RIGHT: engine_input.right = status; break;
+  case SDLK_ESCAPE:
   case SDLK_q: engine_input.quit = status; break;
   case SDLK_z: engine_input.fire = status; break;
+  case SDLK_x: engine_input.world = status; break;
   case SDLK_1: engine_input.debug = status; break;
   }
 }
@@ -81,6 +83,7 @@ int logic_refresh(Uint32 delta)
   {
   case SCENE_INIT: return scene_logic_init(delta); break;
   case SCENE_GAME: return scene_logic_game(delta); break;
+  case SCENE_GAMEOVER: return scene_logic_gameover(delta); break;
   }
   return 1;
 }
@@ -91,6 +94,7 @@ void render_refresh(Uint32 delta)
   {
   case SCENE_INIT: scene_render_init(delta); break;
   case SCENE_GAME: scene_render_game(delta); break;
+  case SCENE_GAMEOVER: scene_render_gameover(delta); break;
   }
   SDL_Flip(engine_screen.screen);
   SDL_FillRect(engine_screen.screen, NULL, 0);
@@ -109,7 +113,7 @@ void engine_run()
     running = logic_refresh(now - before);
     if(!running) break;
     render_refresh(now - before);
-    SDL_Delay(30); /* <- why not Vsynced? */
+    SDL_Delay(10); /* <- why not Vsynced? */
     before = now;
   }
 }
@@ -135,6 +139,7 @@ void engine_load_scene(int scene)
   {
   case SCENE_INIT: scene_load_init(); break;
   case SCENE_GAME: scene_load_game(); break;
+  case SCENE_GAMEOVER: scene_load_gameover(); break;
   }
   engine_scene = scene;
 }
