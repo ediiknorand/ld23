@@ -26,7 +26,7 @@ void game_destroy_item(unsigned int t)
 {
   unsigned int i;
 
-  if(t > game_data.n_item || t > game_data.valid_item)
+  if(t >= game_data.n_item || t >= game_data.valid_item)
     return;
   game_data.items[t].type = 0;
   for(i = game_data.valid_item; i >= 0 && !(game_data.items[i].type); i--)

@@ -30,7 +30,7 @@ void game_destroy_enemy(unsigned int e)
 {
   unsigned int i;
 
-  if(e >= game_data.n_enemy || e > game_data.valid_enemy)
+  if(e >= game_data.n_enemy || e >= game_data.valid_enemy)
     return;
   game_data.enemies[e].life = 0;
   for(i = game_data.valid_enemy; i >= 0 && !(game_data.enemies[i].life); i--)
