@@ -26,7 +26,7 @@ void game_destroy_bullet(unsigned int b)
 {
   unsigned int i;
 
-  if(b > game_data.n_bullet || b > game_data.valid_bullet)
+  if(b >= game_data.n_bullet || b > game_data.valid_bullet)
     return;
   game_data.bullet_array[b].type = 0;
   for(i = game_data.valid_bullet; i >= 0 && !(game_data.bullet_array[i].type); i--)
