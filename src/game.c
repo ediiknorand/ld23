@@ -35,19 +35,19 @@ void game_init(unsigned int n_bullet, unsigned int n_enemy, unsigned int n_item)
   game_data.bullet_array = malloc(sizeof(Bullet)*n_bullet);
   if(!(game_data.bullet_array))
     exit(1);
-  game_data.valid_bullet = 0;
+  game_data.valid_bullet = n_bullet - 1;
 
   game_data.n_enemy = n_enemy;
   game_data.enemies = malloc(sizeof(Spaceship)*n_enemy);
   if(!(game_data.enemies))
     exit(2);
-  game_data.valid_enemy = 0;
+  game_data.valid_enemy = n_enemy -1;
 
   game_data.n_item = n_item;
   game_data.items = malloc(sizeof(Bullet)*n_item);
   if(!(game_data.items))
     exit(3);
-  game_data.valid_item = 0;
+  game_data.valid_item = n_item -1;
 
   for(i = 0; i < game_data.n_bullet; i++)
     game_data.bullet_array[i].type = 0;
@@ -119,12 +119,6 @@ void game_player_process(Uint32 delta)
       world_join();
     }
     game_data.world.cooldown = 0;
-  }
-
-  if(engine_input.debug) /* ... debug? */
-  {
-    printf("create item!\n");
-    game_create_item(engine_screen.width*3/4, engine_screen.height/2, -6, 0, 2);
   }
 }
 
